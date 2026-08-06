@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/constants';
+---
+
+<BaseLayout
+  title="Contact Us"
+  description="Get in touch with GST Calculator India. We'd love to hear your feedback, suggestions, or questions."
+  path="/contact"
+>
+  <article class="mx-auto max-w-2xl px-4 py-14 sm:px-6 sm:py-20">
+    <header class="text-center">
+      <p class="classy-label">Get in Touch</p>
+      <h1 class="mt-4 text-4xl sm:text-5xl">Contact</h1>
+      <div class="classy-divider mt-6"></div>
+      <p class="mt-6 text-muted dark:text-cream/60">
+        We welcome your enquiries, suggestions, and remarks.
+      </p>
+    </header>
+
+    <div class="mt-12 grid gap-10 lg:grid-cols-5">
+      <section class="classy-card p-6 lg:col-span-3">
+        <h2 class="font-serif text-xl">Send a Message</h2>
+        <form
+          class="mt-6 space-y-5"
+          action={`mailto:${SITE.email}`}
+          method="GET"
+          aria-label="Contact form"
+        >
+          <div>
+            <label for="name" class="classy-label mb-2 block">Name</label>
+            <input type="text" id="name" name="name" required placeholder="Your name" class="classy-input text-sm" />
+          </div>
+          <div>
+            <label for="email" class="classy-label mb-2 block">Email</label>
+            <input type="email" id="email" name="reply-to" required placeholder="you@example.com" class="classy-input text-sm" />
+          </div>
+          <div>
+            <label for="subject" class="classy-label mb-2 block">Subject</label>
+            <input type="text" id="subject" name="subject" required placeholder="How can we help?" class="classy-input text-sm" />
+          </div>
+          <div>
+            <label for="message" class="classy-label mb-2 block">Message</label>
+            <textarea
+              id="message"
+              name="body"
+              rows="5"
+              required
+              placeholder="How may we assist you?"
+              class="classy-input resize-y text-sm"
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full border border-navy bg-navy px-6 py-3 text-sm uppercase tracking-[0.12em] text-cream transition-colors hover:bg-navy-light focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold dark:border-gold dark:bg-transparent dark:text-gold dark:hover:bg-gold/10"
+          >
+            Send Message
+          </button>
+        </form>
+      </section>
+
+      <section class="space-y-6 lg:col-span-2">
+        <div class="classy-card p-6">
+          <h2 class="font-serif text-xl">Email</h2>
+          <p class="mt-2 text-sm text-muted dark:text-cream/60">For general correspondence:</p>
+          <a href={`mailto:${SITE.email}`} class="classy-link mt-2 inline-block text-sm">
+            {SITE.email}
+          </a>
+        </div>
+
+        <div class="classy-card p-6">
+          <h2 class="font-serif text-xl">Response Time</h2>
+          <p class="mt-2 text-sm leading-relaxed text-muted dark:text-cream/60">
+            We endeavour to respond within one to two business days. For urgent tax matters, please consult a qualified professional.
+          </p>
+        </div>
+      </section>
+    </div>
+  </article>
+</BaseLayout>

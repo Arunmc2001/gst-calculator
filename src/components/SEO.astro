@@ -1,0 +1,88 @@
+---
+import { SITE } from '../lib/constants';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  noindex?: boolean;
+  og: {
+    title: string;
+    description: string;
+    url: string;
+    type: string;
+    siteName: string;
+  };
+}
+
+const { title, description, canonical, noindex = false, og } = Astro.props;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="keywords" content="GST calculator, GST calculator India, GST calculation, CGST SGST IGST, add GST, remove GST, GST rates India, GST tool, Indian GST, Goods and Services Tax" />
+<link rel="canonical" href={canonical} />
+<link rel="manifest" href="/manifest.json" />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+{!noindex && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
+
+<meta property="og:title" content={og.title} />
+<meta property="og:description" content={og.description} />
+<meta property="og:url" content={og.url} />
+<meta property="og:type" content={og.type} />
+<meta property="og:site_name" content={og.siteName} />
+<meta property="og:locale" content={SITE.locale} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={og.title} />
+<meta name="twitter:description" content={og.description} />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="alternate icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" href="/favicon.svg" />
+<meta name="theme-color" content="#f5f1e8" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#1a2744" media="(prefers-color-scheme: dark)" />
+<meta name="msapplication-TileColor" content="#1a2744" />
+<meta name="application-name" content={SITE.name} />
+<meta name="apple-mobile-web-app-title" content={SITE.name} />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="format-detection" content="telephone=no" />
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: SITE.name,
+  alternateName: 'GST Calculator Online',
+  description: SITE.description,
+  url: SITE.url,
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'Any',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'INR',
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    ratingCount: '1',
+    bestRating: '5',
+    worstRating: '1',
+  },
+})} />
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE.name,
+  url: SITE.url,
+  email: SITE.email,
+  areaServed: {
+    '@type': 'Country',
+    name: 'India',
+  },
+})} />

@@ -1,0 +1,98 @@
+---
+import { SITE, NAV_LINKS } from '../lib/constants';
+import ThemeToggle from './ThemeToggle.astro';
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="border-b-2 border-charcoal/30 bg-white dark:border-cream/30 dark:bg-navy">
+  <div class="border-b border-charcoal/20 bg-cream/40 dark:border-cream/15 dark:bg-navy-light/20">
+    <div class="mx-auto max-w-5xl px-4 py-1 text-center">
+      <p class="text-[11px] uppercase tracking-[0.2em] text-muted font-bold dark:text-cream/50">
+        Goods &amp; Services Tax Calculator — Republic of India
+      </p>
+    </div>
+  </div>
+
+  <div class="mx-auto flex max-w-5xl items-center justify-between gap-6 px-4 py-5 sm:px-6">
+    <a
+      href="/"
+      class="group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold"
+      aria-label={`${SITE.name} home`}
+    >
+      <span class="font-serif text-2xl font-bold tracking-wide text-navy dark:text-cream">
+        GST Calculator
+      </span>
+      <span class="mt-0.5 block text-[11px] uppercase tracking-[0.18em] text-gold font-bold dark:text-gold-light">
+        India
+      </span>
+    </a>
+
+    <nav aria-label="Main navigation" class="hidden items-center gap-8 md:flex">
+      {
+        NAV_LINKS.map(({ href, label }) => {
+          const isActive = currentPath === href || (href !== '/' && currentPath.startsWith(href));
+          return (
+            <a
+              href={href}
+              class:list={[
+                'text-sm uppercase tracking-[0.12em] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold',
+                isActive
+                  ? 'font-bold text-navy border-b-2 border-charcoal pb-1 dark:text-cream dark:border-cream'
+                  : 'text-muted hover:text-navy border-b-2 border-transparent pb-1 hover:border-charcoal/40 dark:text-cream/50 dark:hover:text-cream dark:hover:border-cream/40',
+              ]}
+              aria-current={isActive ? 'page' : undefined}
+            >
+              {label}
+            </a>
+          );
+        })
+      }
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <ThemeToggle />
+      <button
+        type="button"
+        id="mobile-menu-btn"
+        class="inline-flex h-9 w-9 items-center justify-center border-2 border-charcoal/30 text-muted hover:border-gold hover:text-navy hover:bg-cream/50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold md:hidden dark:border-cream/30 dark:text-cream/50 dark:hover:border-gold-light dark:hover:text-cream dark:hover:bg-navy/50"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Open menu"
+      >
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <nav
+    id="mobile-menu"
+    class="hidden border-t-2 border-charcoal/20 px-4 py-4 md:hidden dark:border-cream/20"
+    aria-label="Mobile navigation"
+  >
+    {
+      NAV_LINKS.map(({ href, label }) => (
+        <a
+          href={href}
+          class="block border-b border-charcoal/15 py-3 text-sm uppercase tracking-[0.12em] text-muted last:border-0 hover:text-navy hover:bg-cream/30 hover:pl-6 dark:border-cream/15 dark:text-cream/50 dark:hover:text-cream dark:hover:bg-navy/30"
+        >
+          {label}
+        </a>
+      ))
+    }
+  </nav>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+
+  btn?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden');
+    btn.setAttribute('aria-expanded', String(isOpen));
+    btn.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+  });
+</script>

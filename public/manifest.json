@@ -1,0 +1,28 @@
+{
+  "name": "GST Calculator Online - Free GST Calculation Tool",
+  "short_name": "GST Calculator",
+  "description": "Free online GST calculator for India. Add or remove GST, calculate CGST, SGST, and IGST instantly. Fast, accurate, and mobile-friendly.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f5f1e8",
+  "theme_color": "#7d6340",
+  "lang": "en-IN",
+  "dir": "ltr",
+  "categories": ["finance", "productivity", "business"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon",
+      "purpose": "any"
+    }
+  ]
+}

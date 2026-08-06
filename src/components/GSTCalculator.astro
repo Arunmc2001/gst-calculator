@@ -1,0 +1,404 @@
+---
+import { GST_RATES } from '../lib/constants';
+---
+
+<section
+  id="calculator"
+  class="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-20"
+  aria-labelledby="calculator-heading"
+>
+  <div class="mx-auto max-w-2xl text-center">
+    <p class="classy-label">Online Tax Computation</p>
+    <h1 id="calculator-heading" class="mt-4 text-4xl sm:text-5xl">
+      GST Calculator
+    </h1>
+    <div class="classy-divider mt-6"></div>
+    <p class="mt-6 text-base leading-relaxed text-muted sm:text-lg dark:text-cream/60">
+      Compute GST with precision. Add or remove tax, and view CGST, SGST, or IGST breakdowns.
+    </p>
+  </div>
+
+  <div class="mx-auto mt-12 max-w-2xl">
+    <div class="classy-card">
+      <div class="border-b border-cream-dark p-6 sm:p-8 dark:border-navy-light">
+        <div class="grid gap-8">
+          <!-- Mode Toggle -->
+          <div>
+            <span class="classy-label mb-3 block">Calculation Mode</span>
+            <div class="flex border-b border-cream-dark dark:border-navy-light" role="group" aria-label="Calculation mode">
+              <button
+                type="button"
+                data-mode="add"
+                class="mode-btn classy-btn-inactive flex-1 px-4 py-3 text-sm uppercase tracking-[0.1em] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold"
+              >
+                Add GST
+              </button>
+              <button
+                type="button"
+                data-mode="remove"
+                class="mode-btn classy-btn-inactive flex-1 px-4 py-3 text-sm uppercase tracking-[0.1em] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold"
+              >
+                Remove GST
+              </button>
+            </div>
+          </div>
+
+          <!-- Amount Input -->
+          <div>
+            <label for="amount" class="classy-label mb-3 block">
+              <span id="amount-label">Base Price (Excl. GST)</span>
+            </label>
+            <div class="relative">
+              <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 font-serif text-lg text-gold" aria-hidden="true">₹</span>
+              <input
+                type="number"
+                id="amount"
+                inputmode="decimal"
+                min="0"
+                step="0.01"
+                placeholder="0.00"
+                class="classy-input py-3.5 pl-10 pr-4 text-lg"
+                aria-describedby="amount-hint"
+                aria-invalid="false"
+              />
+            </div>
+            <p id="amount-hint" class="mt-2 text-xs italic text-muted dark:text-cream/40">
+              Enter amount in Indian Rupees
+            </p>
+          </div>
+
+          <!-- GST Rate -->
+          <div>
+            <label for="gst-rate" class="classy-label mb-3 block">GST Rate</label>
+            <div class="flex flex-wrap gap-2" role="group" aria-label="GST rate">
+              {
+                GST_RATES.map((rate) => (
+                  <button
+                    type="button"
+                    data-rate={rate}
+                    class="rate-btn classy-rate-inactive border px-4 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold"
+                  >
+                    {rate}%
+                  </button>
+                ))
+              }
+              <button
+                type="button"
+                data-rate="custom"
+                class="rate-btn classy-rate-inactive border px-4 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold"
+              >
+                Custom
+              </button>
+            </div>
+            <input
+              type="number"
+              id="custom-rate"
+              inputmode="decimal"
+              min="0"
+              max="100"
+              step="0.01"
+              placeholder="Enter custom rate"
+              class="classy-input mt-3 hidden text-sm"
+              aria-label="Custom GST rate percentage"
+              aria-invalid="false"
+            />
+          </div>
+
+          <!-- Tax Type -->
+          <div>
+            <span class="classy-label mb-3 block">Transaction Type</span>
+            <div class="flex border-b border-cream-dark dark:border-navy-light" role="group" aria-label="Transaction type">
+              <button
+                type="button"
+                data-tax="intra"
+                class="tax-btn classy-btn-inactive flex-1 px-4 py-3 text-sm uppercase tracking-[0.1em] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold"
+              >
+                Intra-state
+              </button>
+              <button
+                type="button"
+                data-tax="inter"
+                class="tax-btn classy-btn-inactive flex-1 px-4 py-3 text-sm uppercase tracking-[0.1em] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold"
+              >
+                Inter-state
+              </button>
+            </div>
+            <p class="mt-3 text-xs italic text-muted dark:text-cream/40">
+              Intra-state apportions GST as CGST and SGST. Inter-state applies IGST.
+            </p>
+          </div>
+
+          <!-- Submit Button -->
+          <div>
+            <button
+              type="button"
+              id="calculate-btn"
+              class="classy-submit-btn w-full font-serif"
+              aria-label="Calculate GST"
+            >
+              ⟩  Calculate GST  ⟨
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div
+        id="results"
+        class="bg-cream/70 p-6 sm:p-8 dark:bg-navy/70"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        <h2 class="classy-label mb-6 text-center">Computation Summary</h2>
+        <table class="classic-table w-full border-collapse font-serif" role="grid">
+          <tbody>
+            <tr>
+              <td class="classic-cell classic-label-cell">Original Price</td>
+              <td class="classic-cell classic-value-cell text-right">
+                <span id="result-original">₹0.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="classic-cell classic-label-cell">
+                GST Amount <span id="result-rate-label" class="text-xs">(0%)</span>
+              </td>
+              <td class="classic-cell classic-value-cell text-right text-gold dark:text-gold-light">
+                <span id="result-gst">₹0.00</span>
+              </td>
+            </tr>
+            <tr id="cgst-row">
+              <td class="classic-cell classic-label-cell">
+                CGST <span id="result-cgst-rate" class="text-xs">(0%)</span>
+              </td>
+              <td class="classic-cell classic-value-cell text-right">
+                <span id="result-cgst">₹0.00</span>
+              </td>
+            </tr>
+            <tr id="sgst-row">
+              <td class="classic-cell classic-label-cell">
+                SGST <span id="result-sgst-rate" class="text-xs">(0%)</span>
+              </td>
+              <td class="classic-cell classic-value-cell text-right">
+                <span id="result-sgst">₹0.00</span>
+              </td>
+            </tr>
+            <tr id="igst-row" class="hidden">
+              <td class="classic-cell classic-label-cell">
+                IGST <span id="result-igst-rate" class="text-xs">(0%)</span>
+              </td>
+              <td class="classic-cell classic-value-cell text-right">
+                <span id="result-igst">₹0.00</span>
+              </td>
+            </tr>
+            <tr class="classic-final-row">
+              <td class="classic-cell classic-final-label-cell">Final Price</td>
+              <td class="classic-cell classic-final-value-cell text-right">
+                <span id="result-final">₹0.00</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { calculateGST, formatINR } from '../lib/gst';
+
+  let mode = 'add';
+  let taxType = 'intra';
+  let selectedRate = 18;
+  let isCustomRate = false;
+
+  const amountInput = document.getElementById('amount') as HTMLInputElement;
+  const customRateInput = document.getElementById('custom-rate') as HTMLInputElement;
+  const amountLabel = document.getElementById('amount-label')!;
+
+  const activeBtnClass = 'classy-btn-active';
+  const inactiveBtnClass = 'classy-btn-inactive';
+  const activeRateClass = 'classy-rate-active';
+  const inactiveRateClass = 'classy-rate-inactive';
+
+  function setActive(group: string, activeEl: HTMLElement) {
+    document.querySelectorAll(`.${group}`).forEach((el) => {
+      el.classList.remove(activeBtnClass);
+      el.classList.add(inactiveBtnClass);
+    });
+    activeEl.classList.remove(inactiveBtnClass);
+    activeEl.classList.add(activeBtnClass);
+  }
+
+  function setActiveRate(activeEl: HTMLElement) {
+    document.querySelectorAll('.rate-btn').forEach((el) => {
+      el.classList.remove(activeRateClass);
+      el.classList.add(inactiveRateClass);
+    });
+    activeEl.classList.remove(inactiveRateClass);
+    activeEl.classList.add(activeRateClass);
+  }
+
+  function getRate(): number {
+    if (isCustomRate) {
+      const rate = parseFloat(customRateInput.value);
+      if (isNaN(rate) || rate < 0 || rate > 100) {
+        customRateInput.setAttribute('aria-invalid', 'true');
+        customRateInput.classList.add('classy-input-error');
+        return 0;
+      }
+      customRateInput.setAttribute('aria-invalid', 'false');
+      customRateInput.classList.remove('classy-input-error');
+      return rate;
+    }
+    return selectedRate;
+  }
+
+  function updateUI() {
+    amountLabel.textContent =
+      mode === 'add' ? 'Base Price (Excl. GST)' : 'Price (Incl. GST)';
+
+    const cgstRow = document.getElementById('cgst-row')!;
+    const sgstRow = document.getElementById('sgst-row')!;
+    const igstRow = document.getElementById('igst-row')!;
+
+    if (taxType === 'intra') {
+      cgstRow.classList.remove('hidden');
+      sgstRow.classList.remove('hidden');
+      igstRow.classList.add('hidden');
+    } else {
+      cgstRow.classList.add('hidden');
+      sgstRow.classList.add('hidden');
+      igstRow.classList.remove('hidden');
+    }
+  }
+
+  function clearResults() {
+    (document.getElementById('result-original')!).textContent = '—';
+    (document.getElementById('result-gst')!).textContent = '—';
+    (document.getElementById('result-cgst')!).textContent = '—';
+    (document.getElementById('result-sgst')!).textContent = '—';
+    (document.getElementById('result-igst')!).textContent = '—';
+    (document.getElementById('result-final')!).textContent = '—';
+    (document.getElementById('result-rate-label')!).textContent = '';
+    (document.getElementById('result-cgst-rate')!).textContent = '';
+    (document.getElementById('result-sgst-rate')!).textContent = '';
+    (document.getElementById('result-igst-rate')!).textContent = '';
+  }
+
+  function calculateAndShowResults() {
+    const amount = parseFloat(amountInput.value);
+    const rate = getRate();
+
+    // Validate input
+    if (amount < 0 || isNaN(amount)) {
+      amountInput.setAttribute('aria-invalid', 'true');
+      amountInput.classList.add('classy-input-error');
+      clearResults();
+      return;
+    } else {
+      amountInput.setAttribute('aria-invalid', 'false');
+      amountInput.classList.remove('classy-input-error');
+    }
+
+    const result = calculateGST({ amount, rate, mode, taxType });
+    const halfRate = rate / 2;
+
+    (document.getElementById('result-original')!).textContent = formatINR(result.originalPrice);
+    (document.getElementById('result-gst')!).textContent = formatINR(result.gstAmount);
+    (document.getElementById('result-cgst')!).textContent = formatINR(result.cgst);
+    (document.getElementById('result-sgst')!).textContent = formatINR(result.sgst);
+    (document.getElementById('result-igst')!).textContent = formatINR(result.igst);
+    (document.getElementById('result-final')!).textContent = formatINR(result.finalPrice);
+    (document.getElementById('result-rate-label')!).textContent = `(${rate}%)`;
+    (document.getElementById('result-cgst-rate')!).textContent = `(${halfRate}%)`;
+    (document.getElementById('result-sgst-rate')!).textContent = `(${halfRate}%)`;
+    (document.getElementById('result-igst-rate')!).textContent = `(${rate}%)`;
+  }
+
+  document.querySelectorAll('.mode-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      mode = btn.dataset.mode;
+      setActive('mode-btn', btn);
+      updateUI();
+    });
+  });
+
+  document.querySelectorAll('.tax-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      taxType = btn.dataset.tax;
+      setActive('tax-btn', btn);
+      updateUI();
+    });
+  });
+
+  document.querySelectorAll('.rate-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const rateVal = btn.dataset.rate;
+      setActiveRate(btn);
+
+      if (rateVal === 'custom') {
+        isCustomRate = true;
+        customRateInput.classList.remove('hidden');
+        customRateInput.focus();
+      } else {
+        isCustomRate = false;
+        selectedRate = parseInt(rateVal, 10);
+        customRateInput.classList.add('hidden');
+      }
+    });
+  });
+
+  amountInput.addEventListener('input', () => {
+    const amount = parseFloat(amountInput.value);
+    if (amount < 0) {
+      amountInput.setAttribute('aria-invalid', 'true');
+      amountInput.classList.add('classy-input-error');
+    } else {
+      amountInput.setAttribute('aria-invalid', 'false');
+      amountInput.classList.remove('classy-input-error');
+    }
+  });
+  customRateInput.addEventListener('input', () => {
+    const rate = parseFloat(customRateInput.value);
+    if (isNaN(rate) || rate < 0 || rate > 100) {
+      customRateInput.setAttribute('aria-invalid', 'true');
+      customRateInput.classList.add('classy-input-error');
+    } else {
+      customRateInput.classList.remove('classy-input-error');
+      customRateInput.setAttribute('aria-invalid', 'false');
+    }
+  });
+
+  document.querySelectorAll('input[type="number"]').forEach((el) => {
+    el.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      if (document.activeElement === el) {
+        (el as HTMLInputElement).blur();
+      }
+    }, { passive: false });
+  });
+
+  const calculateBtn = document.getElementById('calculate-btn') as HTMLButtonElement;
+  calculateBtn?.addEventListener('click', () => {
+    calculateAndShowResults();
+    document.getElementById('results')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  amountInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      calculateAndShowResults();
+      document.getElementById('results')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
+  const defaultMode = document.querySelector('[data-mode="add"]') as HTMLElement;
+  const defaultTax = document.querySelector('[data-tax="intra"]') as HTMLElement;
+  const defaultRate = document.querySelector('[data-rate="18"]') as HTMLElement;
+
+  setActive('mode-btn', defaultMode);
+  setActive('tax-btn', defaultTax);
+  setActiveRate(defaultRate);
+  updateUI();
+  clearResults();
+</script>

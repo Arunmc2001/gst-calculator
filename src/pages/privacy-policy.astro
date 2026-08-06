@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/constants';
+
+const lastUpdated = 'August 6, 2026';
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description="Privacy Policy for GST Calculator India. Learn how we handle your data and protect your privacy."
+  path="/privacy-policy"
+>
+  <article class="mx-auto max-w-2xl px-4 py-14 sm:px-6 sm:py-20">
+    <header class="text-center">
+      <p class="classy-label">Legal</p>
+      <h1 class="mt-4 text-4xl sm:text-5xl">Privacy Policy</h1>
+      <div class="classy-divider mt-6"></div>
+      <p class="mt-4 text-sm italic text-muted dark:text-cream/50">Last updated: {lastUpdated}</p>
+    </header>
+
+    <div class="prose-classy mt-12">
+      <section>
+        <h2>Introduction</h2>
+        <p class="mt-3">
+          Welcome to {SITE.name}. We are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard information when you visit our website at {SITE.url}.
+        </p>
+      </section>
+
+      <section>
+        <h2>Information We Collect</h2>
+        <p class="mt-3">
+          Our GST calculator operates entirely in your browser. We do not collect, store, or transmit any financial data or calculation inputs you enter. The amounts and rates you use remain on your device.
+        </p>
+        <p class="mt-3">
+          We may collect anonymous, aggregated analytics data to improve our service. This data cannot be used to identify you personally.
+        </p>
+      </section>
+
+      <section>
+        <h2>Cookies and Local Storage</h2>
+        <p class="mt-3">
+          We use browser local storage to remember your theme preference. No tracking cookies are employed for advertising purposes.
+        </p>
+      </section>
+
+      <section>
+        <h2>Third-Party Services</h2>
+        <p class="mt-3">
+          We may use third-party services such as Google Fonts. These services may collect basic usage data according to their own privacy policies.
+        </p>
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <p class="mt-3">
+          Questions regarding this policy may be directed to{' '}
+          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+        </p>
+      </section>
+    </div>
+  </article>
+</BaseLayout>

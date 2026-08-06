@@ -1,0 +1,55 @@
+---
+import { SITE, FOOTER_LINKS } from '../lib/constants';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t-2 border-charcoal/30 bg-white dark:border-cream/30 dark:bg-navy">
+  <div class="mx-auto max-w-5xl px-4 py-14 sm:px-6">
+    <div class="classy-divider mb-10"></div>
+
+    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+      <div>
+        <p class="font-serif text-xl font-bold text-navy dark:text-cream">{SITE.name}</p>
+        <p class="mt-3 max-w-xs text-sm leading-relaxed text-muted dark:text-cream/60">
+          A refined tool for calculating GST, CGST, SGST, and IGST — built for clarity and precision.
+        </p>
+      </div>
+
+      <div>
+        <p class="classy-label">Navigation</p>
+        <ul class="mt-4 space-y-2.5">
+          {
+            FOOTER_LINKS.map(({ href, label }) => (
+              <li>
+                <a href={href} class="text-sm text-muted hover:text-gold underline decoration-charcoal/30 underline-offset-2 hover:decoration-gold dark:text-cream/60 dark:hover:text-gold-light dark:decoration-cream/30">
+                  {label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <p class="classy-label">Correspondence</p>
+        <p class="mt-4 text-sm text-muted dark:text-cream/60">
+          <a href={`mailto:${SITE.email}`} class="classy-link">
+            {SITE.email}
+          </a>
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-12 border-t border-charcoal/20 pt-8 dark:border-cream/20">
+      <div class="flex flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
+        <p class="text-sm font-bold text-muted dark:text-cream/50">
+          &copy; {year} {SITE.name}
+        </p>
+        <p class="text-xs italic text-muted/80 dark:text-cream/40">
+          For informational purposes only. Not tax or legal advice.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

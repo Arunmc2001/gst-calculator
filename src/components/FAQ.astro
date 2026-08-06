@@ -1,0 +1,48 @@
+---
+import { FAQ_ITEMS } from '../lib/constants';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQ_ITEMS.map(({ question, answer }) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: answer,
+    },
+  })),
+};
+---
+
+<section id="faq" class="border-t-2 border-charcoal/20 bg-white py-16 dark:border-cream/20 dark:bg-navy-light/20" aria-labelledby="faq-heading">
+  <div class="mx-auto max-w-2xl px-4 sm:px-6">
+    <div class="text-center">
+      <p class="classy-label">Enquiries</p>
+      <h2 id="faq-heading" class="mt-4 text-3xl sm:text-4xl">
+        Frequently Asked Questions
+      </h2>
+      <div class="classy-divider mt-6"></div>
+    </div>
+
+    <div class="mt-10 divide-y divide-charcoal/15 dark:divide-cream/15 border-y-2 border-charcoal/20 dark:border-cream/20">
+      {
+        FAQ_ITEMS.map(({ question, answer }) => (
+          <details class="group py-5">
+            <summary
+              class="flex cursor-pointer list-none items-start justify-between gap-6 text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold [&::-webkit-details-marker]:hidden"
+            >
+              <span class="font-serif text-lg font-bold text-navy dark:text-cream">{question}</span>
+              <span class="mt-1 shrink-0 text-gold group-open:rotate-45 dark:text-gold-light" aria-hidden="true">+</span>
+            </summary>
+            <div class="mt-4 pr-8 text-sm leading-relaxed text-muted dark:text-cream/60 faq-answer">
+              {answer}
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
