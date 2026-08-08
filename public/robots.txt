@@ -8,6 +8,4 @@ Crawl-delay: 1
 Disallow: /404
 
 # Sitemap location
-Sitemap: https://gst-calculator-india.com/sitemap.xml
-Sitemap: https://gst-calculator-india.com/sitemap-index.xml
-Sitemap: https://gst-calculator-india.com/sitemap-0.xml
+Sitemap: https://gst-calculator.arunmc-2018.workers.dev/sitemap.xml
