@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://gst-calculator-india.com/</loc>
+    <loc>https://gst-calculator.arunmc-2018.workers.dev/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://gst-calculator-india.com/about</loc>
+    <loc>https://gst-calculator.arunmc-2018.workers.dev/about</loc>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://gst-calculator-india.com/contact</loc>
+    <loc>https://gst-calculator.arunmc-2018.workers.dev/contact</loc>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://gst-calculator-india.com/privacy-policy</loc>
+    <loc>https://gst-calculator.arunmc-2018.workers.dev/privacy-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://gst-calculator-india.com/disclaimer</loc>
+    <loc>https://gst-calculator.arunmc-2018.workers.dev/disclaimer</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
